@@ -1,74 +1,150 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="zh-CN">
 <head>
-    <title>附中你太美</title>
-    <meta itemprop="name" content="附中你太美" />
-    <meta itemprop="description" content="附中你太美" />
-    <meta charset="utf-8" />
-    <meta name="viewport" content="initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0, width=device-width,target-densitydpi=device-dpi" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link href="./static/index.css" rel="stylesheet" type="text/css">
-    <script src="https://pv.sohu.com/cityjson?ie=utf-8"></script>
-    <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
-    <script src="https://passport.cnblogs.com/scripts/jsencrypt.min.js"></script>
-    <script src="./static/index.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>祁俊杰艾鲁狄克</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', '微软雅黑', sans-serif;
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            color: white;
+        }
+        
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .container {
+            text-align: center;
+            padding: 20px;
+            max-width: 90%;
+        }
+        
+        .main-text {
+            font-size: 5rem;
+            font-weight: bold;
+            margin-bottom: 30px;
+            text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5);
+            letter-spacing: 8px;
+            animation: textGlow 2s ease-in-out infinite alternate;
+            line-height: 1.2;
+        }
+        
+        @keyframes textGlow {
+            from { text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 255, 255, 0.3); }
+            to { text-shadow: 3px 3px 15px rgba(0, 0, 0, 0.7), 0 0 30px rgba(255, 255, 255, 0.6); }
+        }
+        
+        .subtitle {
+            font-size: 1.5rem;
+            margin-top: 20px;
+            opacity: 0.9;
+            animation: fadeIn 3s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 0.9; transform: translateY(0); }
+        }
+        
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        
+        .floating-element {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 15s infinite linear;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(-1000px) rotate(720deg); }
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .main-text {
+                font-size: 3rem;
+                letter-spacing: 4px;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .main-text {
+                font-size: 2.2rem;
+                letter-spacing: 2px;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+        }
+    </style>
 </head>
+<body>
+    <div class="floating-elements" id="floatingElements"></div>
+    
+    <div class="container">
+        <h1 class="main-text">祁俊杰艾鲁狄克</h1>
+        <p class="subtitle">专属展示页面</p>
+    </div>
 
-<body onLoad="init()" oncontextmenu=self.event.returnValue=false>
-    <div id="GameScoreLayer" class="BBOX SHADE bgc1" style="display:none;">
-        <div style="padding:5%;margin-top: 200px;background-color: rgba(125, 181, 216, 0.3);">
-            <div id="GameScoreLayer-text"></div>
-            <div id="GameScoreLayer-score" style="margin:10px 0;">得分</div>
-            <div id="GameScoreLayer-bast">最佳</div>
-            <button type="button" class="btn btn-secondary btn-lg" onclick="replayBtn()">重来</button>
-            <button type="button" class="btn btn-secondary btn-lg" onclick="window.location.href='https://github.com/arcxingye/EatKano'">开源</button>
-            <button type="button" class="btn btn-secondary btn-lg" onclick="window.location.href='https://github.com/fangkuai767/EatKun'">开源（改）</button>
-        </div>
-    </div>
-    </div>
-    <div id="welcome" class="SHADE BOX-M">
-        <div class="welcome-bg FILL"></div>
-        <div class="FILL BOX-M" style="position:absolute;top:0;left:0;right:0;bottom:0;z-index:5;">
-            <div style="margin:0 8% 0 9%;">
-                <div style="font-size:2.6em; color:#FEF002;">附中你太美！！！</div><br />
-                <div style="font-size:2.2em; color:#fff; line-height:1.5em;">
-                    从最底下附中你太美开始<br />
-                    看看你20秒能多少分<br />
-                    手机端可能会出现贴图消失<br />
-                    属正常现象，等待一下即可<br />
-                </div>
-                <br />
-                <div id="btn_group" style="display: block;">
-                    <button type="button" id="ready-btn" class="btn btn-primary loading btn-lg">开始附中你太美</button>
-                    <br /><br />
-                    <button type="button" class="btn btn-secondary btn-lg" onclick="show_setting()">18按键自定义</button>
-                </div>
-                <div id="setting" style="display: none;">
-                    <!-- 此为无排行榜版本，去除名字留言 -->
-                    <div class="input-group mb-3" style="display: none;">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">名字</span>
-                        </div>
-                        <input type="text" id="username" class="form-control" maxlength=8 placeholder="用于纪录排行(特殊字符会被过滤)">
-                    </div>
-                    <div class="input-group mb-3" style="display: none;">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">留言</span>
-                        </div>
-                        <input type="text" id="message" class="form-control" maxlength=50 placeholder="禁广告/脏话(本项可不填)">
-                    </div>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">按键</span>
-                        </div>
-                        <input type="text" id="keyboard" class="form-control" maxlength=4 placeholder="默认为1234">
-                    </div>
-                    <button type="button" class="btn btn-secondary btn-lg" onclick="show_btn();save_cookie();">完成</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    <script>
+        // 创建浮动背景元素
+        function createFloatingElements() {
+            const container = document.getElementById('floatingElements');
+            const elementCount = 15;
+            
+            for (let i = 0; i < elementCount; i++) {
+                const element = document.createElement('div');
+                element.classList.add('floating-element');
+                
+                // 随机大小
+                const size = Math.random() * 100 + 50;
+                element.style.width = `${size}px`;
+                element.style.height = `${size}px`;
+                
+                // 随机位置
+                element.style.left = `${Math.random() * 100}%`;
+                element.style.top = `${Math.random() * 100 + 100}%`;
+                
+                // 随机动画延迟和持续时间
+                element.style.animationDelay = `${Math.random() * 5}s`;
+                element.style.animationDuration = `${15 + Math.random() * 20}s`;
+                
+                container.appendChild(element);
+            }
+        }
+        
+        // 页面加载完成后执行
+        window.addEventListener('DOMContentLoaded', createFloatingElements);
+    </script>
 </body>
-
 </html>
